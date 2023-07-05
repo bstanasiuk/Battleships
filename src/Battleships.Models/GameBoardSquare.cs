@@ -13,7 +13,7 @@ public class GameBoardSquare : IGameBoardSquare
         _hasAlreadyBeenShotAt = false;
     }
 
-    public bool ContainsGameShip => _gameShip != null;
+    public bool HasGameShip => _gameShip != null;
 
     public GameSquareStatus Status
     {
@@ -24,7 +24,12 @@ public class GameBoardSquare : IGameBoardSquare
                 return GameSquareStatus.NotShotAtYet;
             }
 
-            return !ContainsGameShip ? GameSquareStatus.ShotAtAndMissed : GameSquareStatus.ShotAtAndHit;
+            if (HasGameShip)
+            {
+                return _gameShip?.HealthPoints > 0 ? GameSquareStatus.ShotAtAndHit : GameSquareStatus.ShotAtAndSunk;
+            }
+
+            return GameSquareStatus.ShotAtAndMissed;
         }
     }
 
@@ -35,13 +40,15 @@ public class GameBoardSquare : IGameBoardSquare
             return ShotResult.SquareAlreadyShotAt;
         }
 
-        if (!ContainsGameShip)
+        _hasAlreadyBeenShotAt = true;
+
+        if (!HasGameShip)
         {
             return ShotResult.ShotMissed;
         }
 
         _gameShip?.ShootAt();
-        _hasAlreadyBeenShotAt = true;
-        return _gameShip?.HealthPoints > 0 ? ShotResult.ShipHit : ShotResult.ShipSunk;
+
+        return _gameShip?.HealthPoints > 0 ? ShotResult.ShipHit : ShotResult.ShipSank;
     }
 }

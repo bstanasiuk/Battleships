@@ -6,5 +6,5 @@ public interface IGameBoard
 {
     GameSquareStatus[,] GameSquareStatuses { get; }
 
-    ShotResult ShootAt(int row, int column);
+    ShotResult ShootAt(ShotCoordinates shotCoordinates);
 }

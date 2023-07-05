@@ -4,7 +4,7 @@ namespace Battleships.Models;
 
 public interface IGameBoardSquare
 {
-    bool ContainsGameShip { get; }
+    bool HasGameShip { get; }
 
     GameSquareStatus Status { get; }
 

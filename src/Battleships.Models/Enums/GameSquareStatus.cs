@@ -4,5 +4,6 @@ public enum GameSquareStatus
 {
     NotShotAtYet,
     ShotAtAndMissed,
-    ShotAtAndHit
+    ShotAtAndHit,
+    ShotAtAndSunk
 }
