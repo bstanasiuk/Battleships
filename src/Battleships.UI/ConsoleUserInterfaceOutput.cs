@@ -21,9 +21,11 @@ public class ConsoleUserInterfaceOutput : IConsoleUserInterfaceOutput
                 .LeftJustified()
                 .Color(Color.Blue));
 
+        AnsiConsole.WriteLine();
+
         AnsiConsole.Write(
             new Markup(
-                "Welcome to Battleships, a simple version of the game " +
+                "Welcome to Battleships! A simple version of the game " +
                 "where you play a one-sided game against ships placed randomly by the computer. " +
                 "You will enter coordinates in a form of “A5”, " +
                 "where “A” is the column and “5” is the row, to specify a square to target. " +
