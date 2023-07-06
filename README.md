@@ -19,7 +19,7 @@ Read more details about the game requirements here: https://medium.com/guestline
 ## Notes
 
 - The app uses [Spectre.Console](https://github.com/spectreconsole/spectre.console) package for console UI formatting. The game uses a couple of colors to make the output more readable, for the best readability use a black background in your terminal.
-- The app has a configurable json file where you can set the game parameters. The game board by default uses a 10x10 grid but that can be expanded to even 26x26 grid, or you can change ships' sizes or amounts. Make your changes here: [appsettings.json](./src/Battleships/appsettings.json).
+- The app has a configurable json file where you can set the game parameters. The game board by default uses a 10x10 grid but that can be expanded to even 26x26, or you can change a ship size or amount. Make your changes here: [appsettings.json](./src/Battleships/appsettings.json).
 The full list of configurable parameters:
 
   - `GameBoardSize` (the size of the game board grid)
