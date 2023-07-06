@@ -1,4 +1,5 @@
-![image](https://github.com/bstanasiuk/Battleships/assets/20246523/963bf5d6-9c67-49b2-9302-2abe5bde2c70)
+![image](https://github.com/bstanasiuk/Battleships/assets/20246523/9b64f66b-7645-4930-a419-957c8edb99a6)
+
 # Battleships
 
 This project is an implementation of a recruitment task for Guestline. The challenge was to program a simple version of the game Battleships, in which a single human player can run a one-sided game of Battleships against ships placed by the computer.
