@@ -9,6 +9,7 @@ namespace Battleships.UI;
 public class ConsoleUserInterfaceInput : IConsoleUserInterfaceInput
 {
     private const string ShotCoordinatesInputRegex = "^([A-Z])([0-9]{1,2})$";
+    private const int AlphabetCharStartingPoint = 64;
 
     private readonly GameSettings _gameSettings;
 
@@ -33,7 +34,7 @@ public class ConsoleUserInterfaceInput : IConsoleUserInterfaceInput
 
     public bool GetRestartConfirmation()
     {
-        return AnsiConsole.Confirm("Game won, all ships are sunk! Do you want to restart?");
+        return AnsiConsole.Confirm("All ships are sunk, congratulations! Do you want to restart?");
     }
 
     private ValidationResult ValidateCoordinatesInput(string coordinatesString)
@@ -47,7 +48,8 @@ public class ConsoleUserInterfaceInput : IConsoleUserInterfaceInput
         var column = GetColumnNumberFromRegexMatch(regexMatch);
         if (column < 1 || column > _gameSettings.GameBoardSize)
         {
-            return ValidationResult.Error($"[red]Column number must be between A and {(char) (_gameSettings.GameBoardSize + 64)}[/]");
+            return ValidationResult.Error(
+                $"[red]Column number must be between A and {(char) (_gameSettings.GameBoardSize + AlphabetCharStartingPoint)}[/]");
         }
 
         var row = GetRowNumberFromRegexMatch(regexMatch);
@@ -61,7 +63,7 @@ public class ConsoleUserInterfaceInput : IConsoleUserInterfaceInput
 
     private int GetColumnNumberFromRegexMatch(Match regexMatch)
     {
-        return regexMatch.Groups[1].Value.ToUpper()[0] - 64;
+        return regexMatch.Groups[1].Value.ToUpper()[0] - AlphabetCharStartingPoint;
     }
 
     private int GetRowNumberFromRegexMatch(Match regexMatch)

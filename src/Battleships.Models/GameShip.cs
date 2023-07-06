@@ -14,11 +14,9 @@ public class GameShip : IGameShip
 
     public void ShootAt()
     {
-        if (HealthPoints <= 0)
+        if (HealthPoints > 0)
         {
-            throw new InvalidOperationException("Cannot shoot at already sunk ship");
+            HealthPoints--;
         }
-
-        HealthPoints--;
     }
 }

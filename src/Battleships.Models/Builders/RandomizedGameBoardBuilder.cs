@@ -5,6 +5,7 @@ namespace Battleships.Models.Builders;
 public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
 {
     private readonly IRandomGenerator _randomGenerator;
+    private readonly int _maxTriesToPlaceShipRandomly;
 
     private int _gameBoardSize;
     private int _battleshipHp;
@@ -15,9 +16,10 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
     private IGameBoardSquare[,]? _builtGameBoardSquares;
     private IList<IGameShip>? _builtGameShips;
 
-    public RandomizedGameBoardBuilder(IRandomGenerator randomGenerator)
+    public RandomizedGameBoardBuilder(IRandomGenerator randomGenerator, int maxTriesToPlaceShipRandomly = 1000)
     {
         _randomGenerator = randomGenerator;
+        _maxTriesToPlaceShipRandomly = maxTriesToPlaceShipRandomly;
 
         Reset();
     }
@@ -68,11 +70,20 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
 
     private void ValidateBuildParameters()
     {
-        if (_gameBoardSize <= 0) throw new ArgumentException("Game board size must be larger than 0");
-        if (_battleshipHp <= 0) throw new ArgumentException("Battleship hp must be larger than 0");
-        if (_destroyerHp <= 0) throw new ArgumentException("Destroyer hp must be larger than 0");
-        if (_battleshipHp > _gameBoardSize) throw new ArgumentException("Battleship hp must be smaller than the game board size");
-        if (_destroyerHp > _gameBoardSize) throw new ArgumentException("Battleship hp must be smaller than the game board size");
+        if (_gameBoardSize <= 0)
+            throw new ArgumentException("Game board size must be larger than 0");
+
+        if (_battleshipsAmount > 0 && _battleshipHp <= 0)
+            throw new ArgumentException("Battleship hp must be larger than 0");
+
+        if (_destroyersAmount > 0 && _destroyerHp <= 0)
+            throw new ArgumentException("Destroyer hp must be larger than 0");
+
+        if (_battleshipsAmount > 0 && _battleshipHp > _gameBoardSize)
+            throw new ArgumentException("Battleship hp must be smaller than the game board size");
+
+        if (_destroyersAmount > 0 && _destroyerHp > _gameBoardSize)
+            throw new ArgumentException("Destroyer hp must be smaller than the game board size");
     }
 
     private void BuildGameShips()
@@ -105,8 +116,6 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
 
     private void PlaceBuiltShipsOnGameBoardSquares()
     {
-        const int maxPossibleTriesToPlaceShip = 1000000;
-
         foreach (var gameShip in _builtGameShips!)
         {
             var shipPlacementTries = 0;
@@ -116,7 +125,7 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
             {
                 isShipPlaced = TryPlaceShipRandomlyOnBoard(gameShip);
 
-                if (++shipPlacementTries == maxPossibleTriesToPlaceShip)
+                if (++shipPlacementTries == _maxTriesToPlaceShipRandomly)
                 {
                     throw new ArgumentException("Ships cannot be placed randomly on the board with set parameters");
                 }
@@ -149,7 +158,7 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
         return canShipBePlaced;
     }
 
-    private bool CanShipBePlacedVerticaly(int shipRow, int shipColumnStartAt, int shipSize)
+    private bool CanShipBePlacedHorizontaly(int shipRow, int shipColumnStartAt, int shipSize)
     {
         for (var i = shipColumnStartAt; i < shipColumnStartAt + shipSize; i++)
         {
@@ -162,7 +171,7 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
         return true;
     }
 
-    private bool CanShipBePlacedHorizontaly(int shipColumn, int shipRowStartAt, int shipSize)
+    private bool CanShipBePlacedVerticaly(int shipColumn, int shipRowStartAt, int shipSize)
     {
         for (var i = shipRowStartAt; i < shipRowStartAt + shipSize; i++)
         {
@@ -175,7 +184,7 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
         return true;
     }
 
-    private void PlaceShipVerticaly(int shipRow, int shipColumnStartAt, IGameShip gameShip)
+    private void PlaceShipHorizontaly(int shipRow, int shipColumnStartAt, IGameShip gameShip)
     {
         for (var i = shipColumnStartAt; i < shipColumnStartAt + gameShip.HealthPoints; i++)
         {
@@ -183,7 +192,7 @@ public class RandomizedGameBoardBuilder : IRandomizedGameBoardBuilder
         }
     }
 
-    private void PlaceShipHorizontaly(int shipColumn, int shipRowStartAt, IGameShip gameShip)
+    private void PlaceShipVerticaly(int shipColumn, int shipRowStartAt, IGameShip gameShip)
     {
         for (var i = shipRowStartAt; i < shipRowStartAt + gameShip.HealthPoints; i++)
         {

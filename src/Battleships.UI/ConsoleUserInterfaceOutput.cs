@@ -1,4 +1,5 @@
 ﻿using Battleships.Configuration;
+using Battleships.Models;
 using Battleships.Models.Enums;
 using Microsoft.Extensions.Options;
 using Spectre.Console;
@@ -35,7 +36,7 @@ public class ConsoleUserInterfaceOutput : IConsoleUserInterfaceOutput
         AnsiConsole.WriteLine();
     }
 
-    public void DisplayGameSquareStatuses(GameSquareStatus[,] gameSquareStatuses)
+    public void DisplayGameBoard(IGameBoard gameBoard)
     {
         AnsiConsole.Write(new Markup(
             "Current state of the game ([white]“M”[/] means Miss, [blue]“H”[/] means Hit, [red]“S”[/] means Sunk):"));
@@ -43,7 +44,7 @@ public class ConsoleUserInterfaceOutput : IConsoleUserInterfaceOutput
 
         var gameBoardTable = new Table();
         AddHeaderColumnsToDisplayTable(gameBoardTable);
-        AddGameStatusRowsToDisplayTable(gameBoardTable, gameSquareStatuses);
+        AddGameStatusRowsToDisplayTable(gameBoardTable, gameBoard);
 
         AnsiConsole.Write(gameBoardTable);
     }
@@ -56,7 +57,6 @@ public class ConsoleUserInterfaceOutput : IConsoleUserInterfaceOutput
             ShotResult.ShotMissed => "It's a [white]Miss[/]!",
             ShotResult.ShipHit => "It's a [blue]Hit[/]!",
             ShotResult.ShipSank => "It's a hit, the ship is [red]Sunk[/]!",
-            ShotResult.AllShipsSank => "It's a hit, all ships are [red]Sunk[/]!",
             _ => ""
         };
 
@@ -70,25 +70,26 @@ public class ConsoleUserInterfaceOutput : IConsoleUserInterfaceOutput
         table.AddColumn(new TableColumn("").Centered());
         for (var i = 0; i < _gameSettings.GameBoardSize; i++)
         {
-            table.AddColumn(new TableColumn(new Panel($"[bold]{(char) (i + 65)}[/]")).Centered());
+            const int letterACharValue = 65;
+            table.AddColumn(new TableColumn(new Panel($"[bold]{(char) (i + letterACharValue)}[/]")).Centered());
         }
     }
 
-    private void AddGameStatusRowsToDisplayTable(Table table, GameSquareStatus[,] gameSquareStatuses)
+    private void AddGameStatusRowsToDisplayTable(Table table, IGameBoard gameBoard)
     {
-        for (var i = 0; i < gameSquareStatuses.GetLength(0); i++)
+        for (var i = 0; i < gameBoard.GameBoardSquares.GetLength(0); i++)
         {
             var rowIdentifierPanel = new Panel($"[bold]{i + 1}[/]");
             var renderableRow = new List<Panel> { rowIdentifierPanel };
 
-            for (var j = 0; j < gameSquareStatuses.GetLength(1); j++)
+            for (var j = 0; j < gameBoard.GameBoardSquares.GetLength(1); j++)
             {
-                var squareMarkupValue = gameSquareStatuses[i, j] switch
+                var squareMarkupValue = gameBoard.GameBoardSquares[i, j].Status switch
                 {
                     GameSquareStatus.NotShotAtYet => " ",
                     GameSquareStatus.ShotAtAndMissed => "[white]M[/]",
                     GameSquareStatus.ShotAtAndHit => "[blue]H[/]",
-                    GameSquareStatus.ShotAtAndSunk => "[red]S[/]",
+                    GameSquareStatus.ShotAtAndSank => "[red]S[/]",
                     _ => " "
                 };
 

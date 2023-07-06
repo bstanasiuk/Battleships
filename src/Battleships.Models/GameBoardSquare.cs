@@ -26,7 +26,7 @@ public class GameBoardSquare : IGameBoardSquare
 
             if (HasGameShip)
             {
-                return _gameShip?.HealthPoints > 0 ? GameSquareStatus.ShotAtAndHit : GameSquareStatus.ShotAtAndSunk;
+                return _gameShip?.HealthPoints > 0 ? GameSquareStatus.ShotAtAndHit : GameSquareStatus.ShotAtAndSank;
             }
 
             return GameSquareStatus.ShotAtAndMissed;

@@ -4,7 +4,11 @@ namespace Battleships.Models;
 
 public interface IGameBoard
 {
-    GameSquareStatus[,] GameSquareStatuses { get; }
+    IEnumerable<IGameShip> GameShips { get; }
+
+    IGameBoardSquare[,] GameBoardSquares { get; }
+
+    bool AreAllShipsSunk { get; }
 
     ShotResult ShootAt(ShotCoordinates shotCoordinates);
 }

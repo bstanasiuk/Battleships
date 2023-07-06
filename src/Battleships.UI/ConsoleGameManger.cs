@@ -1,5 +1,4 @@
 ﻿using Battleships.Models.Builders;
-using Battleships.Models.Enums;
 
 namespace Battleships.UI;
 
@@ -23,32 +22,25 @@ public class ConsoleGameManager : IConsoleGameManager
     {
         _userInterfaceOutput.DisplayWelcomeMessage();
 
-        var shouldLoopNewGame = true;
-        while (shouldLoopNewGame)
+        do
         {
             RunNewGame();
-            shouldLoopNewGame = _userInterfaceInput.GetRestartConfirmation();
         }
+        while (_userInterfaceInput.GetRestartConfirmation());
     }
 
     private void RunNewGame()
     {
         var gameBoard = _randomizedGameBoardDirector.BuildNew();
+        _userInterfaceOutput.DisplayGameBoard(gameBoard);
 
-        var allShipsSunk = false;
-        while (!allShipsSunk)
+        while (!gameBoard.AreAllShipsSunk)
         {
-            _userInterfaceOutput.DisplayGameSquareStatuses(gameBoard.GameSquareStatuses);
-
             var shotCoordinates = _userInterfaceInput.GetShotCoordinates();
             var shotResult = gameBoard.ShootAt(shotCoordinates);
 
             _userInterfaceOutput.DisplayShotResultMessage(shotResult);
-
-            if (shotResult == ShotResult.AllShipsSank)
-            {
-                allShipsSunk = true;
-            }
+            _userInterfaceOutput.DisplayGameBoard(gameBoard);
         }
     }
 }

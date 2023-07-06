@@ -5,6 +5,5 @@ public enum ShotResult
     SquareAlreadyShotAt,
     ShotMissed,
     ShipHit,
-    ShipSank,
-    AllShipsSank
+    ShipSank
 }

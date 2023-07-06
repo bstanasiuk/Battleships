@@ -5,5 +5,5 @@ public enum GameSquareStatus
     NotShotAtYet,
     ShotAtAndMissed,
     ShotAtAndHit,
-    ShotAtAndSunk
+    ShotAtAndSank
 }
