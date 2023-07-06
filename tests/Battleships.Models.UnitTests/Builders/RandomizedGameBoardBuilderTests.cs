@@ -73,7 +73,7 @@ public class RandomizedGameBoardBuilderTests
     }
 
     [Fact]
-    public void Build_GivenValidBattleshipsAmountAndHp_ReturnsRandomizedGameBoardWithSetBattleshipsAmount()
+    public void Build_WithValidBattleshipsAmountAndHp_ReturnsRandomizedGameBoardWithSetBattleshipsAmount()
     {
         const int battleshipHp = 2;
         const int battlehipsAmount = 2;
@@ -96,7 +96,7 @@ public class RandomizedGameBoardBuilderTests
     }
 
     [Fact]
-    public void Build_GivenValidDestroyersAmountAndHp_ReturnsRandomizedGameBoardWithSetDestroyersAmount()
+    public void Build_WithValidDestroyersAmountAndHp_ReturnsRandomizedGameBoardWithSetDestroyersAmount()
     {
         const int destroyerHp = 1;
         const int destroyersAmount = 2;
@@ -119,7 +119,7 @@ public class RandomizedGameBoardBuilderTests
     }
 
     [Fact]
-    public void Build_GivenValidBuildParameters_ReturnsGameBoardWithSquaresHavingHorizontalShip()
+    public void Build_WithValidBuildParameters_ReturnsGameBoardWithSquaresHavingHorizontalShip()
     {
         const bool isHorizontal = true;
         var randomGeneratorMock = new Mock<IRandomGenerator>();
@@ -151,7 +151,7 @@ public class RandomizedGameBoardBuilderTests
     }
 
     [Fact]
-    public void Build_GivenValidBuildParameters_ReturnsGameBoardWithSquaresHavingVerticalShip()
+    public void Build_WithValidBuildParameters_ReturnsGameBoardWithSquaresHavingVerticalShip()
     {
         const bool isHorizontal = false;
         var randomGeneratorMock = new Mock<IRandomGenerator>();
@@ -183,7 +183,7 @@ public class RandomizedGameBoardBuilderTests
     }
 
     [Fact]
-    public void Build_GivenSetParametersThatMakePlacingShipsRandomlyImpossible_ThrowsArgumentException()
+    public void Build_WithSetParametersThatMakePlacingShipsRandomlyImpossible_ThrowsArgumentException()
     {
         const int maxTriesToPlaceShipRandomly = 5;
 
