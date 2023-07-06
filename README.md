@@ -1,5 +1,3 @@
-![image](https://github.com/bstanasiuk/Battleships/assets/20246523/9b64f66b-7645-4930-a419-957c8edb99a6)
-
 # Battleships
 
 This project is an implementation of a recruitment task for Guestline. The challenge was to program a simple version of the game Battleships, in which a single human player can run a one-sided game of Battleships against ships placed by the computer.
@@ -7,6 +5,7 @@ The program creates a 10x10 grid and places several ships on the grid at random 
 The player enters or selects coordinates of the form “A5”, where “A” is the column and “5” is the row, to specify a square to target. Shots result in hits, misses, or sinks. The game ends when all ships are sunk.
 Read more details about the game requirements here: https://medium.com/guestline-labs/hints-for-our-interview-process-and-code-test-ae647325f400.
 
+<img src="https://github.com/bstanasiuk/Battleships/assets/20246523/9b64f66b-7645-4930-a419-957c8edb99a6" width="600">
 
 ## How to run
 
