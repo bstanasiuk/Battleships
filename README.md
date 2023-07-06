@@ -11,14 +11,14 @@ Read more details about the game requirements here: https://medium.com/guestline
 
 ### Run with Dotnet CLI
 1. Install .NET 6 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
-2. In a terminal go into the project's location
+2. In a terminal go into the project's main location
 3. Run command `dotnet publish --output ./Build`
 4. Go into `./Build` location
 5. Run `Battleships.exe`
 
 ### Run with Docker
 1. Install Docker Desktop on your machine: https://www.docker.com/products/docker-desktop/
-2. In a terminal go into the project's location
+2. In a terminal go into the project's main location
 3. Build an image: `docker build -t battleships .`
 4. Run the image: `docker run -it battleships`
 
